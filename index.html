@@ -2,29 +2,45 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
+	<meta charset="UTF-8"/>
 	<title>Pchu</title>
+	<meta name="author" content="Maximilian Ioffe">
+	<meta name="description" content="A co-op game about two creatures, loving named Pchus, who climb to the edge of a colorful, blocky universe.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:url" content="https://web.archive.org/web/20180808002008/http://pchugame.com/"/>
+	<meta property="og:type" content="game"/>
+	<meta property="og:title" content="Pchu"/>
+	<meta property="og:description" content="A co-op game about two creatures, loving named Pchus, who climb to the edge of a colorful, blocky universe."/>
+	<meta property="og:image" content="https://web.archive.org/web/20180808002008im_/http://pchugame.com/assets/sprites/pchuLogo.png"/>
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Pchu">
+	<meta name="twitter:description" content="A co-op game about two creatures, loving named Pchus, who climb to the edge of a colorful, blocky universe.">
+	<meta name="twitter:image" content="https://web.archive.org/web/20180808002008im_/http://pchugame.com/assets/sprites/pchuLogo.png">
+
+	<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
 	<script type="text/javascript" src="js/phaser.js"></script>
 	<script type="text/javascript" src="js/boot.js"></script>
 	<script type="text/javascript" src="js/preload.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/gameover.js"></script>
 	<script src="js/cameraScreenShake.js"></script>
-	<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
 	<link rel="icon" type="image/png" href="assets/sprites/playerWhole.png">
   <!--[if IE]><link rel="shortcut icon" href="assets/sprites/playerWhole.ico"/><![endif]-->
+
 	<style type="text/css">
 		body {
 			margin: 0;
 			background-color: #000000;
 			-webkit-transform-style: preserve-3d;
-  		-moz-transform-style: preserve-3d;
-  		transform-style: preserve-3d;
+			-moz-transform-style: preserve-3d;
+			transform-style: preserve-3d;
 			font-family: 'Open Sans', sans-serif;
 			font-weight: 300;
 			color: #848484;
 			width: 100%;
-		  height: 100%;
+			height: 100%;
 			overflow: hidden;
 		}
 		p {
@@ -34,6 +50,7 @@
 			width: 100%;
 			border-bottom-style: solid;
 			border-bottom-color: #BDBDBD;
+			position:relative;
 			overflow: hidden;
 		}
 		#image {
@@ -41,28 +58,62 @@
 			width:58%;
 		}
 		#image img {
-			margin-left: 25%;
-			margin-top: 1%;
-			width: 40%;
+			margin-left: 30%;
+			margin-top: 1.5%;
+			margin-bottom: 1.5%;
+			width: 30%;
+			height: 100%;
 		}
 		#about {
-			margin-top: 3%;
+			margin-top: 2%;
 			float:left;
-			width: 42%;
+			width: 25%;
 		}
 		#about p {
-			width: 25%;
+			width: 33%;
 			float:left;
+			font-size: 1.2vw;
+			text-align: center;
+		}
+		#share {
+			width: 17%;
+			float: left;
+			text-align: center;
+			position: absolute;
+					right: 0;
+					top: 0;
+			height: 100%;
+			background-color: #001a4d;
+		}
+		#share img {
+			margin-right: 8%;
+			margin-left: 8%;
+			width: 10%;
+			transition: transform 1s;
+				transition-timing-function: ease;
+		}
+		#share p {
+			width: 90%;
+			margin-left: 7%;
+			font-size: 1.2vw;
+			margin-top: 10%;
+		}
+		#share img:hover {
+			transform: translate(0px, -7px);
+			transform: translate(0px, -7px);
+			transform: translate(0px, -7px);
+			transform: translate(0px, -7px);
+			cursor:pointer;
 		}
 		#controlToggle, #helpToggle, #aboutToggle {
 			-webkit-transition: all 1s ease;
-		  -moz-transition: all 1s ease;
-		  -o-transition: all 1s ease;
-		  transition: all 1s ease;
+			-moz-transition: all 1s ease;
+			-o-transition: all 1s ease;
+				transition: all 1s ease;
 			position: relative;
 		}
 		#controlToggle:hover, #helpToggle:hover, #aboutToggle:hover {
-		  color: #FFFFFF;
+			color: white;
 			cursor: pointer;
 		}
 		#helpToggle {
@@ -81,8 +132,8 @@
 		}
 		.leftControls, .rightControls {
 			position: relative;
-  		top: 50%;
-  		transform: translateY(200%);
+			top: 50%;
+			transform: translateY(200%);
 			-webkit-transform: translateY(200%);
 			-ms-transform: translateY(200%);
 			opacity: 0;
@@ -105,7 +156,7 @@
 			display: block;
 		}
 		.colorToggle {
-		  color: #FFFFFF;
+			color: white;
 		}
 		.helpInfo {
 			z-index: 5;
@@ -114,22 +165,19 @@
 			z-index: 6;
 		}
 		.helpInfo, .aboutInfo {
-		  background: #000;
-		  opacity: 0.99;
-		  position:absolute;
-		  top:0%;
-		  left:0%;
-		  width:100%;
-		  height:100%;
+			background: #000;
+			opacity: 0.99;
+			position:absolute;
+			top:0%;
+			left:0%;
+			width:100%;
+			height:100%;
 		}
 		#helpContainer, #aboutContainer {
 			position: relative;
-		  margin: auto;
-		  width: 70%;
-		  height: 100%;
-		}
-		#help1 {
-			margin-top: 23%;
+			margin: auto;
+			width: 70%;
+			height: 100%;
 		}
 		.helpImage {
 			margin-right: 1.5%;
@@ -139,40 +187,46 @@
 		.oneImage {
 			display: block;
 			float: left;
-			margin-left: 7%;
+			margin-left: 6%;
 			margin-right: 1.5%;
 		}
 		.helpSection {
-			padding-left: 10%;
-			margin: auto;
+			margin-left: 10%;
 			margin-bottom: 2%;
 			display: block;
 			width: 100%;
 			overflow: hidden;
 		}
-		#text {
+		#intro {
+			margin-bottom: 2%;
+			display: block;
+			width: 100%;
+			overflow: hidden;
+		}
+		#text, #allHelp {
 			position: absolute;
-		  top: 50%;
-		  left: 50%;
-		  -webkit-transform: translate(-50%, -50%);
-		  -ms-transform: translate(-50%, -50%);
-		  transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
 			text-align: center;
+			width:100%;
 		}
 		.aboutInfo p {
 			width: 100%;
 			display: block;
 		}
 		a {
-		  -webkit-transition: all 1s ease;
-		  -moz-transition: all 1s ease;
-		  -o-transition: all 1s ease;
-		  transition: all 1s ease;
-		  color: #DED0D0;
-		  text-decoration: none;
+			-webkit-transition: all 1s ease;
+			-moz-transition: all 1s ease;
+			-o-transition: all 1s ease;
+			transition: all 1s ease;
+			color: #DED0D0;
+			text-decoration: none;
 		}
 		a:hover {
-		  color: #0066FF;
+			color: #0066FF;
 		}
 	</style>
 </head>
@@ -180,24 +234,28 @@
 <body>
 	<div class="helpInfo unclicked">
 		<div id="helpContainer">
-			<div class="helpSection" id="help1">
-				<img class="helpImage" src="assets/sprites/blockRegularRightShaded.png" alt="regular block">
-				<img class="helpImage" src="assets/sprites/blockRegularLeftShaded.png" alt="regular block">
-				<p>These are regular blocks. They come in two flavors. They'll do the pushing for you.</p>
-			</div>
-			<div class="helpSection">
-				<img class="helpImage" src="assets/sprites/jumpBlockLeftShaded.png" alt="regular block">
-				<img class="helpImage" src="assets/sprites/jumpBlockRightShaded.png" alt="regular block">
-				<p>These are jumpblocks. They also come in two flavors. You have to jump yourself while on them.</p>
-			</div>
-			<div class="helpSection">
-				<img class="oneImage" src="assets/sprites/antiBlockShaded.png" alt="regular block">
-				<p>These are antiblocks. They'll push you away from themselves.</p>
-			</div>
-			<div class="helpSection">
-				<img class="oneImage" src="assets/sprites/enemy.png" alt="regular block">
-				<p>These are bad, bad circles. They are enemies of us squares. Shoot em' or pass em'!</p>
-			</div>
+			<div id="allHelp">
+				<div id="intro">
+					<p>You are a <font color="#E1008C">pchu</font> and your friend is a <font color="#2271AB">pchu</font>. Press the shoot button to find out why. You want to climb up and up and up to reach the edge of the universe, but in order for you two lovely pchu evoking creatures to do that, you need to work together and have perfect chemistry because just like Yin and Yang, there is a part of one inside the other and you rely on each other. Only with excellent coordination and team balance can both of you make it to the top. And now time to introduce what youâ€™re up against.</p>
+				</div>
+				<div class="helpSection">
+					<img class="helpImage" src="assets/sprites/blockRegularRightShaded.png" alt="regular block">
+					<img class="helpImage" src="assets/sprites/blockRegularLeftShaded.png" alt="regular block">
+					<p>These are regular blocks. They come in two flavors. They'll do the pushing for you.</p>
+				</div>
+				<div class="helpSection">
+					<img class="helpImage" src="assets/sprites/jumpBlockLeftShaded.png" alt="regular block">
+					<img class="helpImage" src="assets/sprites/jumpBlockRightShaded.png" alt="regular block">
+					<p>These are jumpblocks. They also come in two flavors. You have to jump yourself while on them.</p>
+				</div>
+				<div class="helpSection">
+					<img class="oneImage" src="assets/sprites/antiBlockShaded.png" alt="regular block">
+					<p>These are antiblocks. They'll push you away from themselves.</p>
+				</div>
+				<div class="helpSection">
+					<img class="oneImage" src="assets/sprites/enemy.png" alt="regular block">
+					<p>These are bad, bad circles. They are enemies of us squares. Shoot em' or pass em'!</p>
+				</div>
 		</div>
 	</div>
 	<div class="aboutInfo unclicked">
@@ -219,7 +277,12 @@
 			<div id="helpToggle"><p>Help</p></div>
 			<div id="aboutToggle"><p id="last">About</p></div>
 		</div>
-	</div>
+		<div id="share">
+			<p><font color="#E1008C">Share the world of Pchu!</font></p>
+			<img id="face" src="assets/sprites/facebook.png" alt="share on facebook">
+			<img id="tweet" src="assets/sprites/twitter.png" alt="share on twitter">
+			</div>
+		</div>
 	<div class="leftControls">
 		<img src="assets/sprites/purpleControls.png" alt="purple controls">
 	</div>
