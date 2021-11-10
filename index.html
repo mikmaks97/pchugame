@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Pchu</title>
+	<script type="text/javascript" src="js/phaser.js"></script>
+	<script type="text/javascript" src="js/boot.js"></script>
+	<script type="text/javascript" src="js/preload.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/gameover.js"></script>
+	<script src="js/cameraScreenShake.js"></script>
+	<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+	<link rel="icon" type="image/png" href="assets/sprites/playerWhole.png">
+  <!--[if IE]><link rel="shortcut icon" href="assets/sprites/playerWhole.ico"/><![endif]-->
+	<style type="text/css">
+		body {
+			margin: 0;
+			background-color: #000000;
+			-webkit-transform-style: preserve-3d;
+  		-moz-transform-style: preserve-3d;
+  		transform-style: preserve-3d;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 300;
+			color: #848484;
+			width: 100%;
+		  height: 100%;
+			overflow: hidden;
+		}
+		p {
+			float: left;
+		}
+		#banner {
+			width: 100%;
+			border-bottom-style: solid;
+			border-bottom-color: #BDBDBD;
+			overflow: hidden;
+		}
+		#image {
+			float: left;
+			width:58%;
+		}
+		#image img {
+			margin-left: 25%;
+			margin-top: 1%;
+			width: 40%;
+		}
+		#about {
+			margin-top: 3%;
+			float:left;
+			width: 42%;
+		}
+		#about p {
+			width: 25%;
+			float:left;
+		}
+		#controlToggle, #helpToggle, #aboutToggle {
+			-webkit-transition: all 1s ease;
+		  -moz-transition: all 1s ease;
+		  -o-transition: all 1s ease;
+		  transition: all 1s ease;
+			position: relative;
+		}
+		#controlToggle:hover, #helpToggle:hover, #aboutToggle:hover {
+		  color: #FFFFFF;
+			cursor: pointer;
+		}
+		#helpToggle {
+			z-index: 5;
+		}
+		#aboutToggle {
+			z-index: 6;
+		}
+		.leftControls {
+			float:left;
+			width:17.1%;
+		}
+		.rightControls {
+			float:right;
+			width:17.1%;
+		}
+		.leftControls, .rightControls {
+			position: relative;
+  		top: 50%;
+  		transform: translateY(200%);
+			-webkit-transform: translateY(200%);
+			-ms-transform: translateY(200%);
+			opacity: 0;
+		}
+		.leftControls img, .rightControls img {
+			width: 90%;
+			margin-left: 5%;
+			display: block;
+		}
+		#game {
+			width: 65.8%;
+			height: 80%;
+			margin: auto;
+			float: left;
+		}
+		.unclicked {
+			display: none;
+		}
+		.clicked {
+			display: block;
+		}
+		.colorToggle {
+		  color: #FFFFFF;
+		}
+		.helpInfo {
+			z-index: 5;
+		}
+		.aboutInfo {
+			z-index: 6;
+		}
+		.helpInfo, .aboutInfo {
+		  background: #000;
+		  opacity: 0.99;
+		  position:absolute;
+		  top:0%;
+		  left:0%;
+		  width:100%;
+		  height:100%;
+		}
+		#helpContainer, #aboutContainer {
+			position: relative;
+		  margin: auto;
+		  width: 70%;
+		  height: 100%;
+		}
+		#help1 {
+			margin-top: 23%;
+		}
+		.helpImage {
+			margin-right: 1.5%;
+			display: block;
+			float: left;
+		}
+		.oneImage {
+			display: block;
+			float: left;
+			margin-left: 7%;
+			margin-right: 1.5%;
+		}
+		.helpSection {
+			padding-left: 10%;
+			margin: auto;
+			margin-bottom: 2%;
+			display: block;
+			width: 100%;
+			overflow: hidden;
+		}
+		#text {
+			position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  -webkit-transform: translate(-50%, -50%);
+		  -ms-transform: translate(-50%, -50%);
+		  transform: translate(-50%, -50%);
+			text-align: center;
+		}
+		.aboutInfo p {
+			width: 100%;
+			display: block;
+		}
+		a {
+		  -webkit-transition: all 1s ease;
+		  -moz-transition: all 1s ease;
+		  -o-transition: all 1s ease;
+		  transition: all 1s ease;
+		  color: #DED0D0;
+		  text-decoration: none;
+		}
+		a:hover {
+		  color: #0066FF;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="helpInfo unclicked">
+		<div id="helpContainer">
+			<div class="helpSection" id="help1">
+				<img class="helpImage" src="assets/sprites/blockRegularRightShaded.png" alt="regular block">
+				<img class="helpImage" src="assets/sprites/blockRegularLeftShaded.png" alt="regular block">
+				<p>These are regular blocks. They come in two flavors. They'll do the pushing for you.</p>
+			</div>
+			<div class="helpSection">
+				<img class="helpImage" src="assets/sprites/jumpBlockLeftShaded.png" alt="regular block">
+				<img class="helpImage" src="assets/sprites/jumpBlockRightShaded.png" alt="regular block">
+				<p>These are jumpblocks. They also come in two flavors. You have to jump yourself while on them.</p>
+			</div>
+			<div class="helpSection">
+				<img class="oneImage" src="assets/sprites/antiBlockShaded.png" alt="regular block">
+				<p>These are antiblocks. They'll push you away from themselves.</p>
+			</div>
+			<div class="helpSection">
+				<img class="oneImage" src="assets/sprites/enemy.png" alt="regular block">
+				<p>These are bad, bad circles. They are enemies of us squares. Shoot em' or pass em'!</p>
+			</div>
+		</div>
+	</div>
+	<div class="aboutInfo unclicked">
+		<div id="aboutContainer">
+			<div id="text">
+				<p>This game is a work of <font color="#E1008C">l<font color="#2271AB">o</font>ve</font> designed by me, Maximilian Ioffe.</p>
+				<p>Check me out at <a href="http://mikmaks.co.nf">http://mikmaks.co.nf</a>.</p>
+				&nbsp;
+				<p>&copy; Mikmaks Studio</p>
+			</div>
+		</div>
+	</div>
+	<div id="banner">
+		<div id="image">
+			<img src="assets/sprites/pchu.png" alt="banner logo">
+		</div>
+		<div id="about">
+			<div id="controlToggle"><p>Controls</p></div>
+			<div id="helpToggle"><p>Help</p></div>
+			<div id="aboutToggle"><p id="last">About</p></div>
+		</div>
+	</div>
+	<div class="leftControls">
+		<img src="assets/sprites/purpleControls.png" alt="purple controls">
+	</div>
+	<div id="game">
+	</div>
+	<div class="rightControls">
+		<img src="assets/sprites/blueControls.png" alt="blue controls">
+	</div>
+
+	<script type="text/javascript">
+		//--------------------------------------------------------------------------
+		//I separate functions with stars (*)
+		//I separate logical groups of code with dashes (-)
+		//this is just so it's easier to dissect
+		//--------------------------------------------------------------------------
+
+		//get width and height of container
+		var w = document.getElementById('game').offsetWidth;
+		var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+		var h = height - document.getElementById('banner').offsetHeight;
+
+		//create game
+		(function() {
+			var game = new Phaser.Game(w, h, Phaser.AUTO, 'game');
+			game.state.add("Boot", boot);
+			game.state.add("Preload", preload);
+			game.state.add("Main", main);
+			game.state.add("GameOver", gameOver);
+			game.state.start("Boot");
+		})();
+	</script>
+	<script type="text/javascript" src="js/toggler.js"></script>
+</body>
+
+</html>
