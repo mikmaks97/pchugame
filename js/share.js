@@ -4,7 +4,7 @@ $(document).ready(function() {
   }
 
   function shareTwitter() {
-    openDeviceBrowser('https://twitter.com/intent/tweet?url=http://pchugame.com&text=Check%20out%20the%20colorful%2C%20blocky%20world%20of%20Pchu%2C%20the%202-player%2C%20co-op%20browser%20game!&hashtags=pchugame,co-op,browser');
+    openDeviceBrowser('https://twitter.com/intent/tweet?url=http://pchugame.com&text=Check%20out%20the%20colorful%2C%20blocky%20world%20of%20Pchu%2C%20the%202-player%2C%20co-op%20browser%20game!&hashtags=pchugame,coop');
   }
 
   function shareFacebook() {

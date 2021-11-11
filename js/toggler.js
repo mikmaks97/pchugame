@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  $(".helpInfo").hide();
+  $(".aboutInfo").hide();
+
   var controlToggle = false;
   $('#controlToggle').on('click',function() {
     var controlText = $(this).find("p");
@@ -19,10 +22,7 @@ $(document).ready(function() {
     var helpText = $(this).find("p");
     helpToggle = !helpToggle;
     helpText.toggleClass("colorToggle");
-    $(".helpInfo").fadeToggle("slow", function(){
-      $(this).toggleClass("unclicked");
-      $(this).toggleClass("clicked");
-    });
+    $(".helpInfo").fadeToggle("slow");
   });
 
   var aboutToggle = false;
@@ -30,9 +30,6 @@ $(document).ready(function() {
     var helpText = $(this).find("p");
     aboutToggle = !aboutToggle;
     helpText.toggleClass("colorToggle");
-    $(".aboutInfo").fadeToggle("slow", function(){
-      $(this).toggleClass("unclicked");
-      $(this).toggleClass("clicked");
-    });
+    $(".aboutInfo").fadeToggle("slow");
   });
 });
