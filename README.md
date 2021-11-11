@@ -7,7 +7,7 @@ Pchu is a browser game, whose protagonists are two complementary edgy creatures,
 
 This project is an experiment in player control, where players control aspects of each other’s abilities, specifically each others' jump and shoot, to guide their pchus ever higher in the infinite vertical scroll.
 
-Try it out at [pchugame.github.io](https://pchugame.github.io).
+Try it out at [pchugame.github.io](https://mikmaks97.github.io/pchugame).
 
 ## Explore the code
 This project is built with [Phaser](https://phaser.io).
